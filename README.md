@@ -2,7 +2,7 @@
 
 Bypass Tiktok SSL pinning on Android devices.  
 Supported ABIs: `armeabi-v7a`, `arm64-v8a`  
-Latest version: `v25.9.4`
+Latest version: `v26.0.2`
 
 If you like this project:  
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/eltimusa4q)
@@ -10,7 +10,7 @@ If you like this project:
 ## Patched APK (No Root)
 
 Download the latest patched APK: 
-+ [tiktok-v25.9.4.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v25.9.4/tiktok-v25.9.4.apk)
++ [tiktok-v26.0.2.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.0.2/tiktok-v26.0.2.apk)
 
 [See all versions](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/)
 
