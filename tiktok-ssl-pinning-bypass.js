@@ -11,10 +11,9 @@ function waitForModule(moduleName) {
 }
 
 function hook_callback(callback) {
-    const f = new NativeFunction(callback, "int", ["pointer","pointer"]);
+    const f = new NativeFunction(callback, "int", ["pointer", "pointer"]);
     Interceptor.attach(f, {
-        onLeave: function(retval)
-        {
+        onLeave: function (retval) {
             retval.replace(0)
         }
     })
@@ -22,16 +21,16 @@ function hook_callback(callback) {
 
 function hook_SSL_CTX_set_custom_verify(library) {
     const functionName = "SSL_CTX_set_custom_verify"
-    
+
 
     try {
         const f = Module.getExportByName(library.name, functionName);
-        const  SSL_CTX_set_custom_verify = new NativeFunction(f, 'void', ['pointer', 'int','pointer'])
+        const SSL_CTX_set_custom_verify = new NativeFunction(f, 'void', ['pointer', 'int', 'pointer'])
 
-        Interceptor.replace(SSL_CTX_set_custom_verify,  new NativeCallback(function(ssl, mode, callback) {
+        Interceptor.replace(SSL_CTX_set_custom_verify, new NativeCallback(function (ssl, mode, callback) {
             hook_callback(callback);
             SSL_CTX_set_custom_verify(ssl, mode, callback)
-        }, 'void', ['pointer', 'int','pointer']));
+        }, 'void', ['pointer', 'int', 'pointer']));
 
         logger(`[*][+] Hooked function: ${functionName}`);
     } catch (err) {
@@ -69,8 +68,37 @@ Java.perform(function () {
         } else {
             logger("[*][-] checkTrustedRecursive not Found")
         }
-    } catch(e) {
+    } catch (e) {
         logger("[*][-] Failed to hook checkTrustedRecursive")
     }
 });
 
+
+Java.perform(function () {
+    try {
+        const x509TrustManager = Java.use("javax.net.ssl.X509TrustManager");
+        const sSLContext = Java.use("javax.net.ssl.SSLContext");
+        const TrustManager = Java.registerClass({
+            implements: [x509TrustManager],
+            methods: {
+                checkClientTrusted(chain, authType) {
+                },
+                checkServerTrusted(chain, authType) {
+                },
+                getAcceptedIssuers() {
+                    return [];
+                },
+            },
+            name: "com.leftenter.tiktok",
+        });
+        const TrustManagers = [TrustManager.$new()];
+        const SSLContextInit = sSLContext.init.overload(
+            "[Ljavax.net.ssl.KeyManager;", "[Ljavax.net.ssl.TrustManager;", "java.security.SecureRandom");
+        SSLContextInit.implementation = function (keyManager, trustManager, secureRandom) {
+            SSLContextInit.call(this, keyManager, TrustManagers, secureRandom);
+        };
+        logger("[*][+] Hooked SSLContextInit")
+    } catch (e) {
+        logger("[*][-] Failed to hook SSLContextInit")
+    }
+})
