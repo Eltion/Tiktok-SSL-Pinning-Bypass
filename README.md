@@ -12,7 +12,7 @@ If you like this project:
 Download the latest patched APK: 
 + [tiktok-v26.7.5.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.7.5/tiktok-v26.7.5.apk)
 + [tiktok-v26.7.5-x86-arm-translation.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.7.5/tiktok-v26.7.5-x86-arm-translation.apk) (Tested on Nox emulator 32bit Android 7.0)
-+ [douyin-v23.0.0.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.7.5/douyin-v23.0.0.apk)
++ [douyin-v23.0.0.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.7.5/douyin-v23.0.0.apk)  
 [See all versions](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/)
 
 ## Run using Frida (Requires Root)
