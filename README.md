@@ -64,4 +64,3 @@ adb logcat -s "TIKTOK_SSL_PINNING_BYPASS:V"
 ```
 
 [#leftenter](#leftenter)
-(#leftenter)
