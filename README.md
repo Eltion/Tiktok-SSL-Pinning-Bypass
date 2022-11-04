@@ -1,8 +1,8 @@
 # Tiktok SSL Pinning Bypass
 
-Bypass Tiktok SSL pinning on Android devices.  
+Bypass TikTok SSL pinning on Android devices.  
 Supported ABIs: `armeabi-v7a`, `arm64-v8a`, `x86` 
-Latest version: `v26.3.2`
+The Latest version: `v26.7.5`
 
 If you like this project:  
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/eltimusa4q)
@@ -10,9 +10,9 @@ If you like this project:
 ## Patched APK (No Root)
 
 Download the latest patched APK: 
-+ [tiktok-v26.3.2.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.3.2/tiktok-v26.3.2.apk)
-+ [tiktok-v26.3.2-x86-arm-translation.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.3.2/tiktok-v26.3.2-x86-arm-translation.apk) (Tested on Nox emulator 32bit Android 7.0)
-
++ [tiktok-v26.7.5.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.7.5/tiktok-v26.7.5.apk)
++ [tiktok-v26.7.5-x86-arm-translation.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.7.5/tiktok-v26.7.5-x86-arm-translation.apk) (Tested on Nox emulator 32bit Android 7.0)
++ [douyin-v23.0.0.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v26.7.5/douyin-v23.0.0.apk)
 [See all versions](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/)
 
 ## Run using Frida (Requires Root)
@@ -64,3 +64,4 @@ adb logcat -s "TIKTOK_SSL_PINNING_BYPASS:V"
 ```
 
 [#leftenter](#leftenter)
+(#leftenter)
