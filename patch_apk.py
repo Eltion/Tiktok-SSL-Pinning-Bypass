@@ -10,6 +10,9 @@ import sys
 import argparse
 from shutil import which
 import subprocess
+from cryptography.hazmat.primitives.serialization import pkcs7
+from cryptography.hazmat.primitives.serialization import Encoding
+import binascii
 
 
 TEMP_FOLDER = os.getcwd() + "/temp"
@@ -181,11 +184,33 @@ def patch_apk(apk):
     apk_out.close()
     return apk_out.filename
 
+def get_signature_file(apk):
+    with ZipFile(apk, "r") as apk_in:
+        files = apk_in.infolist()
+        for file in files:
+            if file.filename.startswith("META-INF") and file.filename.endswith("RSA"):
+                return apk_in.read(file.filename)
 
-def copy_script_temp():
+
+def extract_original_signature(apk):
+    singature_file_content = get_signature_file(apk)
+    certificate = pkcs7.load_der_pkcs7_certificates(singature_file_content)[0]
+    certificate_bytes = certificate.public_bytes(Encoding.DER)
+    return binascii.hexlify(certificate_bytes).decode()
+
+def copy_script_temp(apk):
+    signature = extract_original_signature(apk)
     src = os.path.join(os.getcwd(), "tiktok-ssl-pinning-bypass.js")
     dest = os.path.join(TEMP_FOLDER, "libsslbypass.js.so")
-    return shutil.copy(src, dest)
+    f_src = open(src, "r")
+    script_content = f_src.read()
+    f_src.close()
+    script_content = script_content.replace("<ORIGINAL_APK_SIGNATURE>", signature)
+    script_content = script_content.replace("//spoofSigniature()", "spoofSigniature()")
+    f_dest = open(dest, "w")
+    f_dest.write(script_content)
+    f_dest.close()
+    return dest
 
 
 def create_config_file():
@@ -241,7 +266,7 @@ def main():
 
     config_file = create_config_file()
     print("Created config_file at: ", config_file)
-    script = copy_script_temp()
+    script = copy_script_temp(temp_apk)
     print("Created script_file at: ", script)
     for arch in archs:
         print("\nPatching for", arch)
