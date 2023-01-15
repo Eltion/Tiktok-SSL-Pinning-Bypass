@@ -5,7 +5,10 @@ Supported ABIs: `armeabi-v7a`, `arm64-v8a`, `x86`
 The Latest version: `v26.7.5`
 
 If you like this project:  
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/eltimusa4q)
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/eltimusa4q)  
+
+**Bitcoin**: bc1q6kvvun3cfm5kadesxflntszp8z9lqesra35law  
+**Ethereum**: 0x47633Ef59b0F765b7f8047b0A56230cfeBB34027
 
 ## Patched APK (No Root)
 
