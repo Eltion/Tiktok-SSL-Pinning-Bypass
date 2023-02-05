@@ -20,7 +20,7 @@ Download the latest patched APK:
 
 ## Run using Frida (Requires Root)
 
-This method requires that frida-tools and frida-server to be running in the device.
+This method assumes that frida-tools and frida-server are already running in the mobile device.
 On Windows, run:
 ```
 frida -U -l .\tiktok-ssl-pinning-bypass.js -f com.zhiliaoapp.musically --no-pause
@@ -50,7 +50,7 @@ Note: apksigner and zipalign can also be found in android sdk [build-tools](http
 ### Instructions
 
 1. Download TikTok apk file.
-2. Install requirements > `pip install -r requirements.txt`
+2. Install requirements > `pip install --user -r requirements.txt`
 3. Run script > `python patch_apk.py -i <input apk> -o <output apk>`
 
 After that an patched apk file should be generated.
