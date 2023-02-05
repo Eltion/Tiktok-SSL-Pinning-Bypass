@@ -206,7 +206,7 @@ def copy_script_temp(apk):
     script_content = f_src.read()
     f_src.close()
     script_content = script_content.replace("<ORIGINAL_APK_SIGNATURE>", signature)
-    script_content = script_content.replace("//spoofSigniature()", "spoofSigniature()")
+    script_content = script_content.replace("//spoofSignature()", "spoofSignature()")
     f_dest = open(dest, "w")
     f_dest.write(script_content)
     f_dest.close()

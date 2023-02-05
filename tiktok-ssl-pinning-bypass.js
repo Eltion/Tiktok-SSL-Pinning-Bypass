@@ -11,9 +11,9 @@ function waitForModule(moduleName) {
 }
 
 //Only needed when apk is patched with frida-gadget
-//spoofSigniature() 
+//spoofSignature() 
 
-function spoofSigniature() {
+function spoofSignature() {
     const originalSignature = "<ORIGINAL_APK_SIGNATURE>" //This will be set by patch_apk.py
     Java.perform(() => {
         const PackageManager = Java.use("android.app.ApplicationPackageManager");
