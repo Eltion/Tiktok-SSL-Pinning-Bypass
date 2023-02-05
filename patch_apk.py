@@ -162,7 +162,7 @@ def download_frida_gadget(arch):
             if asset["name"] == "frida-gadget-{0}-android-{1}.so.xz".format(tag_name, arch_config[arch]):
                 frida_gadget_url = asset["browser_download_url"]
                 archive_path = download_file(
-                    frida_gadget_url, "firda-gadget-{0}-{1}.so.xz".format(tag_name, arch))
+                    frida_gadget_url, "frida-gadget-{0}-{1}.so.xz".format(tag_name, arch))
                 return extract_frida_gadget(archive_path, arch)
 
 
@@ -228,7 +228,7 @@ def create_config_file():
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Remove ssl pining from tiktok app')
+        description='Remove ssl pining from TikTok app')
     parser.add_argument("-i", "--input", type=str,
                         help="Input apk file.", required=True)
     parser.add_argument("-o", "--output", type=str,

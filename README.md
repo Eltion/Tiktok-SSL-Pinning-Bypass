@@ -2,7 +2,7 @@
 
 Bypass TikTok SSL pinning on Android devices.  
 Supported ABIs: `armeabi-v7a`, `arm64-v8a`, `x86` 
-The Latest version: `v26.7.5`
+The Latest version: `v27.8.1`
 
 If you like this project:  
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/eltimusa4q)  
@@ -20,31 +20,36 @@ Download the latest patched APK:
 
 ## Run using Frida (Requires Root)
 
-This method requires frida-tools and also frida-server running in the device
+This method requires that frida-tools and frida-server to be running in the device.
+On Windows, run:
 ```
 frida -U -l .\tiktok-ssl-pinning-bypass.js -f com.zhiliaoapp.musically --no-pause
 ```
+On Linux with, run:
+```
+frida -U -l tiktok-ssl-pinning-bypass.js -f com.zhiliaoapp.musically --no-pause
+```
+Note that the `--no pause` flag has been deprecated since [frida 15.2](https://github.com/frida/frida/issues/2277)
 
 ## Patch APK
 
 You can create your own patched APK. 
-
 
 ### Requirements Linux (Ubuntu):
 1. Install java JRE: `sudo apt install default-jre`
 2. Install apksigner: `sudo apt install apksigner`
 3. Install zipalign: `sudo apt install zipalign`  
 
-Note: apksigner and zipalign can also be found in android sdk [build-tools](https://dl.google.com/android/repository/build-tools_r30.0.1-linux.zip)
+Note: apksigner and zipalign can also be found in android sdk [build-tools](https://dl.google.com/android/repository/build-tools_r33.0.1-linux.zip)
 
 ### Requirements Windows:
 1. Install java JRE
-2. Download [build-tools](https://dl.google.com/android/repository/build-tools_r30.0.1-windows.zip) and unzip
-3. Add unzip folder to path variable
+2. Download [build-tools](https://dl.google.com/android/repository/build-tools_r33.0.1-windows.zip) and unzip
+3. Add the unzipped folder to PATH
 
 ### Instructions
 
-1. Download tiktok apk file.
+1. Download TikTok apk file.
 2. Install requirements > `pip install -r requirements.txt`
 3. Run script > `python patch_apk.py -i <input apk> -o <output apk>`
 
@@ -54,11 +59,11 @@ After that an patched apk file should be generated.
 
 You can use a tool like mitmproxy or Burp Suite to intercept the network.
 
-1. Install patched APK in the device
+1. Install the patched APK in the device
 2. Install [mitmproxy](https://mitmproxy.org/) or [Burp Suite](https://portswigger.net/burp)
 3. Set up proxy for wifi settings or run: `adb shell settings put global http_proxy <proxy>`
 
-Now you should be able to see the network traffic.
+Now you should be able to see their network traffic.
 
 ## View script logs
 To view the logcat run:

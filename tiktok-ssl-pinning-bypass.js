@@ -10,11 +10,11 @@ function waitForModule(moduleName) {
     });
 }
 
-//Only needed when apk is patched with frida-gadget
-//spoofSignature() 
+// Only needed when apk is patched with frida-gadget
+// spoofSignature() 
 
 function spoofSignature() {
-    const originalSignature = "<ORIGINAL_APK_SIGNATURE>" //This will be set by patch_apk.py
+    const originalSignature = "<ORIGINAL_APK_SIGNATURE>" // This will be set by patch_apk.py
     Java.perform(() => {
         const PackageManager = Java.use("android.app.ApplicationPackageManager");
         const Signature = Java.use("android.content.pm.Signature");
@@ -76,7 +76,7 @@ waitForModule("libsscronet.so").then((lib) => {
     hook_SSL_CTX_set_custom_verify(lib);
 });
 
-//Universal Android SSL Pinning Bypass #2
+// Universal Android SSL Pinning Bypass #2
 Java.perform(function () {
     try {
         var array_list = Java.use("java.util.ArrayList");
