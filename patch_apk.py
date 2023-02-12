@@ -172,7 +172,8 @@ def patch_apk(apk):
     apk_out = ZipFile(os.path.join(TEMP_FOLDER, "new_apk.apk"), "w")
     files = apk_in.infolist()
     for file in files:
-        if not os.path.exists(os.path.join(TEMP_FOLDER, file.filename)) and not file.filename.startswith("META-INF\\"):
+        # META-INF\\ is for linux, META-INF/ is for windows.
+        if not os.path.exists(os.path.join(TEMP_FOLDER, file.filename)) and not file.filename.startswith("META-INF\\") and not file.filename.startswith("META-INF/"):
             apk_out.writestr(file.filename, apk_in.read(file.filename), compress_type=file.compress_type, compresslevel=9)
     apk_in.close()
     libfolder = os.path.join(TEMP_FOLDER, "lib")
