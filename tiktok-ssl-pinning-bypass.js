@@ -69,6 +69,16 @@ function logger(message) {
     });
 }
 
+logger("[*][*] Disable forced login");
+Java.perform(function () {
+    let Bundle = Java.use("android.os.Bundle");
+    Bundle['putBoolean'].implementation = function (key, value) {
+        if(key==="is_skippable_dialog"){
+            value = true;
+        }
+        return this.putBoolean(key, value);
+    }
+});
 
 logger("[*][*] Waiting for libsscronet...");
 waitForModule("libsscronet.so").then((lib) => {

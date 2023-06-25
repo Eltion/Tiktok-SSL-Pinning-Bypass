@@ -25,6 +25,10 @@ This method requires frida-tools and also frida-server running in the device
 frida -U -l .\tiktok-ssl-pinning-bypass.js -f com.zhiliaoapp.musically --no-pause
 ```
 
+## Disable Forced Login
+
+Disable forced login, access in visitor mode.
+
 ## Patch APK
 
 You can create your own patched APK. 
