@@ -192,14 +192,69 @@ def get_signature_file(apk):
                 return apk_in.read(file.filename)
 
 
+# def extract_original_signature(apk):
+#     singature_file_content = get_signature_file(apk)
+#     certificate = pkcs7.load_der_pkcs7_certificates(singature_file_content)[0]
+#     certificate_bytes = certificate.public_bytes(Encoding.DER)
+#     return binascii.hexlify(certificate_bytes).decode()
+
 def extract_original_signature(apk):
     singature_file_content = get_signature_file(apk)
-    certificate = pkcs7.load_der_pkcs7_certificates(singature_file_content)[0]
-    certificate_bytes = certificate.public_bytes(Encoding.DER)
-    return binascii.hexlify(certificate_bytes).decode()
+    
+    try:
+        certificate = pkcs7.load_der_pkcs7_certificates(singature_file_content)[0]
+        certificate_bytes = certificate.public_bytes(Encoding.DER)
+        return binascii.hexlify(certificate_bytes).decode()
+    except Exception as e:
+        print("Error extracting original signature: ", e)
+        print("Fallback to using original signature from APK file.")
+        original_signature = get_original_signature_from_apk(apk)
+        return original_signature
+        
+def get_original_signature_from_apk(apk):
+    # Initialize the signature content as None (fallback value)
+    signature_content = None
+
+    with ZipFile(apk, "r") as apk_in:
+        files = apk_in.infolist()
+        for file in files:
+            if file.filename.startswith("META-INF") and (file.filename.endswith(".RSA") or file.filename.endswith(".DSA")):
+                # Found the signature file
+                signature_file_content = apk_in.read(file.filename)
+                try:
+                    # Attempt to load the certificate from the signature file
+                    certificate = pkcs7.load_der_pkcs7_certificates(signature_file_content)[0]
+                    certificate_bytes = certificate.public_bytes(Encoding.DER)
+                    # Convert the certificate to hex-encoded string and return it
+                    signature_content = binascii.hexlify(certificate_bytes).decode()
+                    break  # Exit the loop once the signature is successfully extracted
+                except Exception as e:
+                    # If an error occurs, print the error message and continue searching for other signature files
+                    print("Error extracting original signature from {0}: {1}".format(file.filename, e))
+                    continue
+
+    return signature_content
+
+# def copy_script_temp(apk):
+#     signature = extract_original_signature(apk)
+#     src = os.path.join(os.getcwd(), "tiktok-ssl-pinning-bypass.js")
+#     dest = os.path.join(TEMP_FOLDER, "libsslbypass.js.so")
+#     f_src = open(src, "r")
+#     script_content = f_src.read()
+#     f_src.close()
+#     script_content = script_content.replace("<ORIGINAL_APK_SIGNATURE>", signature)
+#     script_content = script_content.replace("//spoofSignature()", "spoofSignature()")
+#     f_dest = open(dest, "w")
+#     f_dest.write(script_content)
+#     f_dest.close()
+#     return dest
 
 def copy_script_temp(apk):
     signature = extract_original_signature(apk)
+    if signature is None:
+        # Provide a fallback value for the signature (e.g., a default value or an empty string)
+        signature = "FALLBACK_SIGNATURE"
+    
     src = os.path.join(os.getcwd(), "tiktok-ssl-pinning-bypass.js")
     dest = os.path.join(TEMP_FOLDER, "libsslbypass.js.so")
     f_src = open(src, "r")
@@ -211,6 +266,7 @@ def copy_script_temp(apk):
     f_dest.write(script_content)
     f_dest.close()
     return dest
+
 
 
 def create_config_file():
