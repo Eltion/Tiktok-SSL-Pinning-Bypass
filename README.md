@@ -2,7 +2,7 @@
 
 Bypass TikTok SSL pinning on Android devices.  
 Supported ABIs: `armeabi-v7a`, `arm64-v8a`  
-The Latest version: `v30.1.2`
+The Latest version: `v31.5.3`
 
 If you like this project:  
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/eltimusa4q)  
@@ -15,7 +15,7 @@ If you like this project:
 ## Patched APK (No Root)
 
 Download the latest patched APK: 
-+ [tiktok-v30.1.2.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v30.1.2/tiktok-v30.1.2.apk)  
++ [tiktok-v31.5.3.apk](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/download/v31.5.3/tiktok-v31.5.3.apk)  
 [See all versions](https://github.com/Eltion/Tiktok-SSL-Pinning-Bypass/releases/)
 
 ## Run using Frida (Requires Root)
@@ -79,7 +79,7 @@ exit
 adb pull /sdcard/libsscronet.so
 ```
 
-4. Run `python -i libsscronet.so -a [arm64-v8a|armeabi-v7a]`
+4. Run `python patch_lib.py -i libsscronet.so -a [arm64-v8a|armeabi-v7a]`
 5. After `libsscronet_patched.so` is created we can push it in to the phone
 
 ```bash
