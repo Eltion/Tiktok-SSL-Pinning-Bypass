@@ -19,6 +19,7 @@ def patch_function_arm64(lib):
 
     results = r2.cmdj("/badj sub sp, sp")
     offset = hex(results[-1]["offset"])
+    print(offset)
     r2.cmd("s " + str(offset))
     r2.cmd("wao ret0")
     r2.quit()
@@ -65,8 +66,9 @@ if __name__ == "__main__":
     lib = args.input
     arch = args.arch
 
-    shutil.copy(lib, "libsscronet_patched.so")
+    out_lib = "libsscronet_patched.so"
+    shutil.copy(lib, out_lib)
 
-    patch_function(lib, arch)
+    patch_function(out_lib, arch)
     print("Done!")
 
