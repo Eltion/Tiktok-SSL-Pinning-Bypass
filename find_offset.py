@@ -6,21 +6,24 @@ import argparse
 
 def find_function_arm64(lib):
     print("Finding function offset in " + lib)
+    
     r2 = r2pipe.open(lib, ["-2"])
+    
     r2.cmd('aae')
     results = r2.cmdj('/xj 56 65 72 69 66 79 43 65 72 74 00')
     offset = results[0]['offset']
     results = r2.cmdj('axtj ' + str(offset))
-    usage_offset = results[0]['from']
+    results = [x for x in results if x['type'] == "STRN"]
+    usage_offset = results[1]['from']
     r2.cmd("s " + str(usage_offset))
 
     r2.cmd("e search.from="+str(usage_offset-1000))
     r2.cmd("e search.to="+str(usage_offset))
-
     results = r2.cmdj("/badj sub sp, sp")
     r2.quit()
     offset = hex(results[-1]["offset"])
     return offset
+
 
 
 def find_function_arm(lib):
