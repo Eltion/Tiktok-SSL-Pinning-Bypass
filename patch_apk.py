@@ -277,10 +277,10 @@ def main():
                         help="Password for keystore", default="password")
 
     args = parser.parse_args()
-    inputfile = args.input
-    outputfile = args.output
-    keyalias = args.keyalias
-    storepass = args.storepass
+    inputfile = str.strip(args.input)
+    outputfile = str.strip(args.output)
+    keyalias = str.strip(args.keyalias)
+    storepass = str.strip(args.storepass)
     keystore = None
 
     if not check_tools():

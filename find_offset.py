@@ -10,11 +10,13 @@ def find_function_arm64(lib):
     r2 = r2pipe.open(lib, ["-2"])
     
     r2.cmd('aae')
-    results = r2.cmdj('/xj 56 65 72 69 66 79 43 65 72 74 00')
+    results = r2.cmdj('/xj 63 65 72 74 5F 63 6F 75 6E 74 00')
     offset = results[0]['offset']
+    
     results = r2.cmdj('axtj ' + str(offset))
     results = [x for x in results if x['type'] == "STRN"]
-    usage_offset = results[1]['from']
+    
+    usage_offset = results[0]['from']
     r2.cmd("s " + str(usage_offset))
 
     r2.cmd("e search.from="+str(usage_offset-1000))
@@ -30,11 +32,13 @@ def find_function_arm(lib):
     print("Finding function offset in " + lib)
     r2 = r2pipe.open(lib, ["-2"])
     r2.cmd('aae')
-    results = r2.cmdj('/xj 56 65 72 69 66 79 43 65 72 74 00')
+    results = r2.cmdj('/xj 63 65 72 74 5F 63 6F 75 6E 74 00')
     offset = results[0]['offset']
+    
     results = r2.cmdj('axtj ' + str(offset))
+    results = [x for x in results if x['type'] == "STRN"]
+    
     usage_offset = results[0]['from']
-
     r2.cmd("s " + str(usage_offset))
 
     r2.cmd("e search.from="+str(usage_offset-1000))
