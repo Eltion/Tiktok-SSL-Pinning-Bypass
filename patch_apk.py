@@ -13,7 +13,6 @@ import subprocess
 from cryptography.hazmat.primitives.serialization import pkcs7
 from cryptography.hazmat.primitives.serialization import Encoding
 import binascii
-import find_offset
 
 
 TEMP_FOLDER = os.getcwd() + "/temp"
@@ -46,9 +45,6 @@ def check_tools():
         return False
     if not is_tool_installed("zipalign"):
         print("zipalign not installed or not in PATH")
-        return False
-    if not is_tool_installed("r2"):
-        print("r2 not installed or not in PATH")
         return False
     return True
 
@@ -231,24 +227,6 @@ def copy_script_temp(apk):
     f_dest.close()
     return dest
 
-
-def set_function_offset(script, arch, offset):
-    print("fun_offset: " + offset)
-    src = os.path.join(TEMP_FOLDER, "libsslbypass.js.so")
-    dest = os.path.join(TEMP_FOLDER, "lib", arch, "libsslbypass.js.so")
-    f_src = open(src, "r")
-    script_content = f_src.read()
-    f_src.close()
-    if arch == "armeabi-v7a":
-        script_content = script_content.replace("<ARM_OFFSET>", offset)
-    elif arch == "arm64-v8a":
-        script_content = script_content.replace("<ARM64_OFFSET>", offset)
-    f_dest = open(dest, "w")
-    f_dest.write(script_content)
-    f_dest.close()
-    return dest
-
-
 def create_config_file():
     filepath = os.path.join(TEMP_FOLDER, "libgadget.config.so")
     config = {
@@ -309,9 +287,8 @@ def main():
         arch_folder = os.path.join(TEMP_FOLDER, "lib", arch)
         download_frida_gadget(arch)
         inject_frida_gadget(nativelib)
-        fcn_offset = find_offset.find_function_from_apk(temp_apk, arch)
-        set_function_offset(script, arch, fcn_offset)
         shutil.copy(config_file, arch_folder)
+        shutil.copy(script, arch_folder)
     output = patch_apk(temp_apk)
     zip_align_apk(output)
     sign_apk(output, keystore, keyalias, storepass)

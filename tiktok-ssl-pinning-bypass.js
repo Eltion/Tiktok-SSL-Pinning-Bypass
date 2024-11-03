@@ -32,27 +32,6 @@ function spoofSignature() {
     });
 }
 
-function hook_certVerify(lib) {
-    const arm_offset = "<ARM_OFFSET>";
-    const arm64_offset = "<ARM64_OFFSET>";
-    let offset = ptr(0);
-    if (Process.arch == "arm" && !isNaN(arm_offset)) {
-        offset = ptr(arm_offset);
-    } else if (Process.arch == "arm64" && !isNaN(arm64_offset)) {
-        offset = ptr(arm64_offset);
-    } else {
-        logger("[*][-] You need to run gen_script.py first.");
-        return;
-    }
-    const f = lib.base.add(offset);
-    try {
-        hook_callback(f);
-        logger(`[*][+] Hooked certVerify at offset: ${offset}`);
-    }catch(e){
-        logger(`[*][-] Failed to hook certVerify at offset: ${offset}`);
-    }
-}
-
 function hook_callback(callback) {
     const f = new NativeFunction(callback, "int", ["pointer", "pointer"]);
     Interceptor.attach(f, {
@@ -95,12 +74,6 @@ waitForModule("libttboringssl.so").then((lib) => {
     hook_SSL_CTX_set_custom_verify(lib);
 });
 
-logger("[*][*] Waiting for libsscronet...");
-waitForModule("libsscronet.so").then((lib) => {
-    logger(`[*][+] Found libsscronet at: ${lib.base}`)
-    hook_certVerify(lib);
-});
-
 //Universal Android SSL Pinning Bypass #2
 Java.perform(function() {
     try {
@@ -119,7 +92,6 @@ Java.perform(function() {
         logger("[*][-] Failed to hook checkTrustedRecursive")
     }
 });
-
 
 Java.perform(function() {
     try {
