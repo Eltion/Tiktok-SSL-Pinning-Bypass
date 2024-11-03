@@ -32,7 +32,6 @@ You can create your own patched APK.
 1. Install java JRE: `sudo apt install default-jre`
 2. Install apksigner: `sudo apt install apksigner`
 3. Install zipalign: `sudo apt install zipalign`  
-4. Install radare2: `sudo apt install radare2`  
 
 Note: apksigner and zipalign can also be found in android sdk [build-tools](https://dl.google.com/android/repository/build-tools_r30.0.1-linux.zip)
 
@@ -40,7 +39,6 @@ Note: apksigner and zipalign can also be found in android sdk [build-tools](http
 1. Install java JRE
 2. Download [build-tools](https://dl.google.com/android/repository/build-tools_r30.0.1-windows.zip) and unzip
 3. Add unzip folder to path variable
-4. Install [radare2](https://github.com/radareorg/radare2/releases/) and add to path
 
 
 ### Instructions
