@@ -21,7 +21,7 @@ Download the latest patched APK:
 
 Requires frida-tools
 ```
-frida -U -l .\ssl_bypass.js -f com.zhiliaoapp.musically
+frida -U -l .\tiktok-ssl-pinning-bypass.js -f com.zhiliaoapp.musically
 ```
 
 ## Patch APK (with frida-gadget)
